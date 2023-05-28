@@ -7,7 +7,8 @@ TheLazyCloset
 3. Open main.dart and run the file
 
 # Built with
-Flutter
+- Flutter 3.10.1
+- Visual Studio Code 1.78.2
   
 # Proposed Level of Achievement
 Apollo 11 
