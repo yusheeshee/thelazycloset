@@ -2,7 +2,7 @@
 TheLazyCloset 
 
 # Getting Started
-This project requires flutter SDK of versions >=3.0.1 <4.0.0 
+This project requires Flutter SDK of versions >=3.0.1 <4.0.0 
 
 1. Clone this project using this command git clone [https://github.com/yusheeshee/thelazycloset.git](https://github.com/yusheeshee/thelazycloset.git)
 2. Ensure that Flutter SDK is available on your system. To install Flutter SDK, visit [https://docs.flutter.dev/get-started/install](https://docs.flutter.dev/get-started/install)
