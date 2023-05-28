@@ -6,16 +6,14 @@ This project requires flutter SDK of versions >=3.0.1 <4.0.0
 
 1. Clone this project using this command git clone [https://github.com/yusheeshee/thelazycloset.git](https://github.com/yusheeshee/thelazycloset.git)
 2. Ensure that Flutter SDK is available on your system. To install Flutter SDK, visit [https://docs.flutter.dev/get-started/install](https://docs.flutter.dev/get-started/install)
-3. Once Flutter SDK is installed, open the project in an IDE of your choice 
+3. Once Flutter SDK is installed, open this project in an IDE of your choice 
 4. Choose the simulator you desire to run this app in
 5. Run the following commands in order:
 ```
-
 flutter upgrade # upgrades the flutter SDK to the latest version 
 flutter pub get # gets all the required dependencies 
 flutter pub upgrade # upgrades the dependencies 
 flutter run # runs the application in debug mode
-
 ```
 
 # Built with
