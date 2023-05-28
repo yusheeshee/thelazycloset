@@ -41,21 +41,21 @@ TheLazyCloset is an app that helps users pick their outfits. Users get creative 
 
 # Timeline & Features to be Completed
 29 May 2023 - Evaluation Milestone 1: 
-              -> Login page
-              -> Inspiration page (for men & women)
+- Login page
+- Inspiration page (for men & women)
 
 26 June 2023 - Evaluation Milestone 2: 
-               -> Uploading, cropping, overlaying & resizing of images
-               -> Album creation 
+- Uploading, cropping, overlaying & resizing of images
+- Album creation 
 
 24 July 2023 - Evaluation Milestone 3: 
-               -> Favourites page
-               -> Blacklist page
+- Favourites page
+- Blacklist page
 
 24 Aug 2023 - Splashdown:
-              -> complete user authentication process for login page
-              -> Polish up the system
-              -> Implement additional features that are of least priority
+- Complete user authentication process for login page
+- Polish up the system
+- Implement additional features that are of least priority
 
 # Project Log
 Click [here](https://docs.google.com/document/d/1xSXjJ4GT0lR4IUAcNpesj0ZGguzwzQIioxeZ_aclI9o/edit?usp=sharing)
