@@ -1,10 +1,22 @@
-# Team Name
+# Team/Project Name
 TheLazyCloset 
 
 # Getting Started
-1. Download the zip file from https://github.com/yusheeshee/thelazycloset
-2. Extract and open the files on your choice of platform
-3. Open main.dart and run the file
+This project requires flutter SDK of versions >=3.0.1 <4.0.0 
+
+1. Clone this project using this command git clone [https://github.com/yusheeshee/thelazycloset.git](https://github.com/yusheeshee/thelazycloset.git)
+2. Ensure that Flutter SDK is available on your system. To install Flutter SDK, visit [https://docs.flutter.dev/get-started/install](https://docs.flutter.dev/get-started/install)
+3. Once Flutter SDK is installed, open the project in an IDE of your choice 
+4. Choose the simulator you desire to run this app in
+5. Run the following commands in order:
+```
+
+flutter upgrade # upgrades the flutter SDK to the latest version 
+flutter pub get # gets all the required dependencies 
+flutter pub upgrade # upgrades the dependencies 
+flutter run # runs the application in debug mode
+
+```
 
 # Built with
 - Flutter 3.10.1
@@ -58,5 +70,6 @@ TheLazyCloset is an app that helps users pick their outfits. Users get creative 
 - Polish up the system
 - Implement additional features that are of least priority
 
-# Project Log
-Click [here](https://docs.google.com/document/d/1xSXjJ4GT0lR4IUAcNpesj0ZGguzwzQIioxeZ_aclI9o/edit?usp=sharing)
+# Google Drive Folder
+Click [here](https://drive.google.com/drive/folders/1XHhlOF08e2804ByexL0-5tx9RGsMLESy?usp=drive_link) to access our project poster, video, log and APK file
+
