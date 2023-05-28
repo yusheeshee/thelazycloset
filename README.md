@@ -3,8 +3,11 @@ TheLazyCloset
 
 # Getting Started
 1. Download the zip file from https://github.com/yusheeshee/thelazycloset
-2. Extract and open the files on your choice of platform.
-3. Open main.dart and run the file. 
+2. Extract and open the files on your choice of platform
+3. Open main.dart and run the file
+
+# Built with
+Flutter
   
 # Proposed Level of Achievement
 Apollo 11 
@@ -53,3 +56,6 @@ TheLazyCloset is an app that helps users pick their outfits. Users get creative 
               -> complete user authentication process for login page
               -> Polish up the system
               -> Implement additional features that are of least priority
+
+# Project Log
+Click [here](https://docs.google.com/document/d/1xSXjJ4GT0lR4IUAcNpesj0ZGguzwzQIioxeZ_aclI9o/edit?usp=sharing)
