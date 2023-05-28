@@ -23,9 +23,9 @@ We hope to make an app that helps users pick their outfits, and guide users in m
 
 
 # User Stories
-As a user who has trouble deciding what to wear, I want to be able to receive recommendations for outfits based on my personal fashion style.  
-As a user who has no time and energy to try out different sets of clothes, I want to be able to set how different pieces of clothing will match one another and how they will fit on my body type.
-As a user who has trouble remembering her slay and nay fits, I would want to be able to store and view all my favourite outfits.
+- As a user who has trouble deciding what to wear, I want to be able to receive recommendations for outfits based on my personal fashion style.  
+- As a user who has no time and energy to try out different sets of clothes, I want to be able to set how different pieces of clothing will match one another and how they will fit on my body type.
+- As a user who has trouble remembering her slay and nay fits, I would want to be able to store and view all my favourite outfits.
 
 # Features
 TheLazyCloset is an app that helps users pick their outfits. Users get creative in the creative space where they can choose clothing items and build their outfit on their own bodies. 
