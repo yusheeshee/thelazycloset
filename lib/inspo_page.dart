@@ -18,7 +18,6 @@ class InspoPage extends StatelessWidget {
             Row(
               children: <Widget>[
                 Align(
-                  alignment: Alignment.topLeft,
                   child: TextButton(
                     onPressed: () {
                       Navigator.pop(context);
@@ -30,7 +29,7 @@ class InspoPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(width: 115),
+                const SizedBox(width: 125),
                 const ImageIcon(
                   AssetImage('images/hanger.png'),
                   size: 30,
