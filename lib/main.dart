@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'login_page.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const TheLazyCloset());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class TheLazyCloset extends StatelessWidget {
+  const TheLazyCloset({super.key});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

@@ -1,57 +1,9 @@
 import 'package:flutter/material.dart';
 import 'enlarge_page.dart';
-import 'womenspo_page.dart';
 
-List<ImageDetails> _images = [
-  ImageDetails(
-    imagePath: 'images/menspo1.jpg',
-  ),
-  ImageDetails(
-    imagePath: 'images/menspo2.jpg',
-  ),
-  ImageDetails(
-    imagePath: 'images/menspo3.jpg',
-  ),
-  ImageDetails(
-    imagePath: 'images/menspo4.jpg',
-  ),
-  ImageDetails(
-    imagePath: 'images/menspo5.jpg',
-  ),
-  ImageDetails(
-    imagePath: 'images/menspo6.jpg',
-  ),
-  ImageDetails(
-    imagePath: 'images/menspo7.jpg',
-  ),
-  ImageDetails(
-    imagePath: 'images/menspo8.jpg',
-  ),
-  ImageDetails(
-    imagePath: 'images/menspo9.jpg',
-  ),
-  ImageDetails(
-    imagePath: 'images/menspo10.jpg',
-  ),
-  ImageDetails(
-    imagePath: 'images/menspo11.jpg',
-  ),
-  ImageDetails(
-    imagePath: 'images/menspo12.jpg',
-  ),
-  ImageDetails(
-    imagePath: 'images/menspo13.jpg',
-  ),
-  ImageDetails(
-    imagePath: 'images/menspo14.jpg',
-  ),
-  ImageDetails(
-    imagePath: 'images/menspo15.jpg',
-  ),
-];
-
-class MenspoPage extends StatelessWidget {
-  const MenspoPage({super.key});
+class InspoPage extends StatelessWidget {
+  final List<String> displayImages;
+  const InspoPage({super.key, required this.displayImages});
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +54,7 @@ class MenspoPage extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                             builder: (context) => EnlargePage(
-                              imagePath: _images[index].imagePath,
+                              imagePath: displayImages[index],
                               index: index,
                             ),
                           ),
@@ -112,14 +64,14 @@ class MenspoPage extends StatelessWidget {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
                           image: DecorationImage(
-                            image: AssetImage(_images[index].imagePath),
+                            image: AssetImage(displayImages[index]),
                             fit: BoxFit.cover,
                           ),
                         ),
                       ),
                     );
                   },
-                  itemCount: _images.length,
+                  itemCount: displayImages.length,
                 ),
               ),
             ),

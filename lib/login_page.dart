@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'my_textfield.dart';
-import 'my_button.dart';
+import 'control_page.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
 
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
-
-  void signUserIn() {}
 
   @override
   Widget build(BuildContext context) {
@@ -92,8 +90,39 @@ class LoginPage extends StatelessWidget {
                 const SizedBox(
                   height: 15,
                 ),
-                MyButton(
-                  onTap: signUserIn,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    ButtonTheme(
+                      child: RawMaterialButton(
+                        fillColor: Colors.white,
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ControlPage(),
+                            ),
+                          );
+                        },
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 135,
+                          vertical: 10,
+                        ),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0)),
+                        child: const Center(
+                          child: Text(
+                            "Sign In",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(
                   height: 180,
