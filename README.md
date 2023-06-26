@@ -60,8 +60,8 @@ TheLazyCloset is an app that helps users pick their outfits. Users get creative 
 - Album creation 
 
 24 July 2023 - Evaluation Milestone 3: 
-- Favourites page
-- Blacklist page
+- Favourites & Blacklist page
+- Avatar drag and drop clothing items function
 
 24 Aug 2023 - Splashdown:
 - Complete user authentication process for login page
