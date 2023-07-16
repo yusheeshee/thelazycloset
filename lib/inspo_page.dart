@@ -9,6 +9,25 @@ class InspoPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        leading: TextButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: const ImageIcon(
+            AssetImage('images/backarrow.png'),
+            size: 20,
+            color: Colors.white,
+          ),
+        ),
+        title: const ImageIcon(
+          AssetImage('images/hanger.png'),
+          size: 30,
+          color: Colors.white,
+        ),
+        centerTitle: true,
+      ),
       body: SafeArea(
         child: Column(
           children: <Widget>[
@@ -64,7 +83,7 @@ class InspoPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(15),
                           image: DecorationImage(
                             image: AssetImage(displayImages[index]),
-                            fit: BoxFit.cover,
+                            fit: BoxFit.fill,
                           ),
                         ),
                       ),

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'dart:typed_data';
+import 'dart:io';
 
-class EnlargePage extends StatelessWidget {
+class ImagePage extends StatelessWidget {
   final String imagePath;
   final int index;
 
-  const EnlargePage({super.key, required this.imagePath, required this.index});
+  const ImagePage({super.key, required this.imagePath, required this.index});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +35,6 @@ class EnlargePage extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: <Widget>[
-            const SizedBox(height: 5),
             Expanded(
               child: Hero(
                 tag: 'logo$index',
@@ -40,14 +42,14 @@ class EnlargePage extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15.0),
                     image: DecorationImage(
-                      image: AssetImage(imagePath),
-                      fit: BoxFit.cover,
+                      image: Image.memory(base64Decode(imagePath)).image,
+                      fit: BoxFit.contain,
                     ),
                   ),
                 ),
               ),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 80),
           ],
         ),
       ),

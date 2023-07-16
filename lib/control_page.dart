@@ -3,7 +3,9 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'closet_page.dart';
 import 'thoughts_page.dart';
 import 'choose_page.dart';
-import 'fits_page.dart';
+import 'tryon_page.dart';
+
+import 'main.dart';
 
 class ControlPage extends StatefulWidget {
   const ControlPage({super.key});
@@ -22,7 +24,7 @@ class _ControlPageState extends State<ControlPage> {
   }
 
   final List<Widget> _pages = [
-    const FitsPage(),
+    const TryOnPage(),
     const ClosetPage(),
     const ThoughtsPage(),
     const ChoosePage(),

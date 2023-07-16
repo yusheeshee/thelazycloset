@@ -89,7 +89,10 @@ class ChoosePage extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                ButtonTheme(
+                // ignore: sized_box_for_whitespace
+                Container(
+                  width: 300,
+                  height: 70,
                   child: RawMaterialButton(
                     fillColor: Colors.white,
                     onPressed: () {
@@ -100,7 +103,6 @@ class ChoosePage extends StatelessWidget {
                         ),
                       );
                     },
-                    padding: const EdgeInsets.fromLTRB(120, 20, 120, 20),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15.0)),
                     child: const Text(
@@ -121,9 +123,10 @@ class ChoosePage extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                ButtonTheme(
-                  minWidth: 200,
-                  height: 200,
+                // ignore: sized_box_for_whitespace
+                Container(
+                  width: 300,
+                  height: 70,
                   child: RawMaterialButton(
                     fillColor: Colors.white,
                     onPressed: () {
@@ -134,7 +137,6 @@ class ChoosePage extends StatelessWidget {
                         ),
                       );
                     },
-                    padding: const EdgeInsets.fromLTRB(135, 20, 135, 20),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15.0)),
                     child: const Text(
