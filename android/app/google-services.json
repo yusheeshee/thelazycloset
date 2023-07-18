@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "990736978525",
+    "project_id": "thelazycloset",
+    "storage_bucket": "thelazycloset.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:990736978525:android:c489278c7249c0ec3b73b4",
+        "android_client_info": {
+          "package_name": "com.example.thelazycloset"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "990736978525-5m7ni8038lgnje8v70g2a45du37b0ic6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHORKm1bbI5mmEAOMQ7XMOwuLrhfeTUEI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "990736978525-5m7ni8038lgnje8v70g2a45du37b0ic6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "990736978525-17cmau8nvam3v0d1b92a99rp8af9l3f2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.thelazycloset.RunnerTests"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:990736978525:android:9ebeae473a136ade3b73b4",
+        "android_client_info": {
+          "package_name": "thelazycloset.com"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "990736978525-5m7ni8038lgnje8v70g2a45du37b0ic6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHORKm1bbI5mmEAOMQ7XMOwuLrhfeTUEI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "990736978525-5m7ni8038lgnje8v70g2a45du37b0ic6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "990736978525-17cmau8nvam3v0d1b92a99rp8af9l3f2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.thelazycloset.RunnerTests"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

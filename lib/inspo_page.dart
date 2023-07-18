@@ -31,31 +31,6 @@ class InspoPage extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: <Widget>[
-            const SizedBox(
-              height: 5,
-            ),
-            Row(
-              children: <Widget>[
-                Align(
-                  child: TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: const ImageIcon(
-                      AssetImage('images/backarrow.png'),
-                      size: 20,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 125),
-                const ImageIcon(
-                  AssetImage('images/hanger.png'),
-                  size: 30,
-                  color: Colors.white,
-                ),
-              ],
-            ),
             Expanded(
               child: Container(
                 padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
@@ -83,7 +58,7 @@ class InspoPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(15),
                           image: DecorationImage(
                             image: AssetImage(displayImages[index]),
-                            fit: BoxFit.fill,
+                            fit: BoxFit.cover,
                           ),
                         ),
                       ),

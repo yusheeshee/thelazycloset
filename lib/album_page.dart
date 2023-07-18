@@ -6,8 +6,6 @@ import 'image_page.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'removeapi.dart';
 import 'dart:convert';
-import 'dart:typed_data';
-import 'dart:io';
 
 class PhotoAlbumScreen extends StatefulWidget {
   final int id;
@@ -39,11 +37,19 @@ class _PhotoAlbumScreenState extends State<PhotoAlbumScreen> {
     final pickedImage = await imagePicker.pickImage(source: source);
     if (pickedImage != null) {
       final croppedImage = await ImageCropper().cropImage(
-        sourcePath: pickedImage.path, // Set desired aspect ratio
-        compressQuality: 100, // Adjust the compression quality as needed
-        maxWidth: 500, // Limit the maximum width of the cropped image
-        maxHeight: 500, // Limit the maximum height of the cropped image
-      );
+          sourcePath: pickedImage.path, // Set desired aspect ratio
+          compressQuality: 100, // Adjust the compression quality as needed
+          maxWidth: 500, // Limit the maximum width of the cropped image
+          maxHeight: 500,
+          uiSettings: [
+            AndroidUiSettings(
+              backgroundColor: Colors.black,
+              toolbarWidgetColor: Colors.white,
+              toolbarColor: Colors.black,
+              statusBarColor: Colors.black,
+            )
+          ] // Limit the maximum height of the cropped image
+          );
       if (croppedImage != null) {
         final removeApi = RemoveAPI();
         final removedBgImage = await removeApi.removeBgApi(croppedImage.path);
@@ -175,6 +181,8 @@ class _PhotoAlbumScreenState extends State<PhotoAlbumScreen> {
                             image:
                                 Image.memory(base64Decode(album.images[index]))
                                     .image,
+
+                            /// Image.file(File(album.images[index])).image,
                             fit: BoxFit.cover,
                           ),
                         )),
@@ -182,13 +190,67 @@ class _PhotoAlbumScreenState extends State<PhotoAlbumScreen> {
                     },
                   )),
             ),
-            FloatingActionButton(
+            RawMaterialButton(
               onPressed: () async {
-                _pickImage(ImageSource.gallery);
+                showModalBottomSheet(
+                  context: context,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15)),
+                  backgroundColor: Colors.grey[300],
+                  builder: (BuildContext context) {
+                    return SizedBox(
+                      width: 50,
+                      height: 155,
+                      child: Column(children: [
+                        ListTile(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(0),
+                              side: const BorderSide(width: 0.5)),
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 20),
+                          title: const Text(
+                            "Choose from gallery",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w600),
+                          ),
+                          leading: const Icon(
+                            Icons.image,
+                            color: Colors.black,
+                          ),
+                          onTap: () {
+                            _pickImage(ImageSource.gallery);
+                          },
+                        ),
+                        ListTile(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(0),
+                                side: const BorderSide(width: 1.0)),
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 20),
+                            title: const Text(
+                              "Take photo",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                            leading:
+                                const Icon(Icons.camera, color: Colors.black),
+                            onTap: () {
+                              _pickImage(ImageSource.camera);
+                            }),
+                      ]),
+                    );
+                  },
+                );
               },
-              backgroundColor: Colors.black,
-              child: const Icon(Icons.add),
+              child: const Icon(
+                Icons.add,
+                color: Colors.white,
+                size: 30,
+              ),
             ),
+            SizedBox(height: 10),
           ],
         ),
       ),

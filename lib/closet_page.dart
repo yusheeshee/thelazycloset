@@ -4,8 +4,7 @@ import 'package:thelazycloset/album_page.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'dart:convert';
 import 'albumdb.dart';
-import 'dart:typed_data';
-import 'dart:io';
+import 'package:flutter/cupertino.dart';
 
 class ClosetPage extends StatefulWidget {
   const ClosetPage({super.key});
@@ -84,15 +83,16 @@ class _ClosetPageState extends State<ClosetPage> {
               child: ListTile(
                   tileColor: Colors.black,
                   shape: RoundedRectangleBorder(
-                    side: const BorderSide(width: 1.0, color: Colors.white),
+                    side: const BorderSide(
+                        width: 1.0, color: Color.fromARGB(255, 208, 207, 207)),
                     borderRadius: BorderRadius.circular(15),
                   ),
                   contentPadding: const EdgeInsets.all(15),
                   title: Text(album.name,
-                      style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w400)),
+                      style: TextStyle(
+                          color: Colors.grey[300],
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600)),
                   leading: album.images.isEmpty
                       ? const Icon(
                           color: Color.fromARGB(255, 170, 169, 169),
@@ -100,6 +100,8 @@ class _ClosetPageState extends State<ClosetPage> {
                           size: 40,
                         )
                       : Image.memory(base64Decode(album.images.first)),
+
+                  /// Image.file(File(album.images.first)),
                   onTap: () async {
                     await Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => PhotoAlbumScreen(id: album.id!)));
@@ -143,42 +145,44 @@ class _ClosetPageState extends State<ClosetPage> {
                       await showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            return AlertDialog(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15)),
-                              backgroundColor:
-                                  const Color.fromARGB(255, 31, 30, 30),
+                            return CupertinoAlertDialog(
                               title: const Text(
                                 'Create Album',
                                 style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w400,
+                                  color: Colors.black,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'TsukimiRounded',
                                 ),
                               ),
-                              content: TextField(
-                                style: const TextStyle(color: Colors.white),
+                              content: CupertinoTextField(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 10, horizontal: 10),
                                 controller: _newAlbumController,
-                                decoration: const InputDecoration(
-                                    hintText: 'Album Name',
-                                    hintStyle: TextStyle(
-                                      color: Color.fromARGB(255, 172, 171, 171),
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold,
-                                    )),
+                                placeholder: 'Album name',
+                                placeholderStyle: const TextStyle(
+                                  color: Color.fromARGB(255, 172, 171, 171),
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w600,
+                                  fontFamily: 'TsukimiRounded',
+                                ),
                               ),
                               actions: <Widget>[
                                 TextButton(
                                   child: const Text('Cancel',
                                       style: TextStyle(
-                                        color: Colors.white,
+                                        color: Colors.black,
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.bold,
                                       )),
                                   onPressed: () async => Navigator.pop(context),
                                 ),
                                 TextButton(
                                   child: const Text('Create',
                                       style: TextStyle(
-                                        color: Colors.white,
+                                        color: Colors.black,
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.bold,
                                       )),
                                   onPressed: () async {
                                     _createAlbum();
@@ -204,52 +208,52 @@ class _ClosetPageState extends State<ClosetPage> {
                 itemBuilder: (context, index) {
                   final album = albums[index];
                   return Slidable(
-                      startActionPane: ActionPane(
-                        extentRatio: 0.3,
+                      endActionPane: ActionPane(
                         motion: const StretchMotion(),
+                        extentRatio: 0.3,
                         children: [
                           SlidableAction(
-                            borderRadius: BorderRadius.circular(15),
+                            borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(15),
+                                bottomLeft: Radius.circular(15)),
                             autoClose: true,
                             icon: Icons.edit,
                             backgroundColor:
                                 const Color.fromARGB(255, 238, 233, 192),
                             onPressed: (context) async => {
-                              showDialog(
+                              await showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(15)),
-                                    backgroundColor:
-                                        const Color.fromARGB(255, 31, 30, 30),
+                                  return CupertinoAlertDialog(
                                     title: const Text(
                                       'Rename Album',
                                       style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w400,
+                                        color: Colors.black,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'TsukimiRounded',
                                       ),
                                     ),
-                                    content: TextField(
-                                      style:
-                                          const TextStyle(color: Colors.white),
-                                      controller: _renameAlbumController,
-                                      decoration: const InputDecoration(
-                                          hintText: 'New album name',
-                                          hintStyle: TextStyle(
-                                            color: Color.fromARGB(
-                                                255, 172, 171, 171),
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.bold,
-                                          )),
+                                    content: CupertinoTextField(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 10, horizontal: 10),
+                                      controller: _newAlbumController,
+                                      placeholder: 'New album name',
+                                      placeholderStyle: const TextStyle(
+                                        color:
+                                            Color.fromARGB(255, 172, 171, 171),
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w600,
+                                        fontFamily: 'TsukimiRounded',
+                                      ),
                                     ),
                                     actions: <Widget>[
                                       TextButton(
                                         child: const Text('Cancel',
                                             style: TextStyle(
-                                              color: Colors.white,
+                                              color: Colors.black,
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.bold,
                                             )),
                                         onPressed: () async =>
                                             Navigator.pop(context),
@@ -257,7 +261,9 @@ class _ClosetPageState extends State<ClosetPage> {
                                       TextButton(
                                         child: const Text('Rename',
                                             style: TextStyle(
-                                              color: Colors.white,
+                                              color: Colors.black,
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.bold,
                                             )),
                                         onPressed: () async {
                                           _renameAlbum(album);
@@ -270,60 +276,54 @@ class _ClosetPageState extends State<ClosetPage> {
                               ),
                             },
                           ),
-                        ],
-                      ),
-                      endActionPane: ActionPane(
-                        motion: const StretchMotion(),
-                        extentRatio: 0.3,
-                        children: [
                           SlidableAction(
-                            borderRadius: BorderRadius.circular(15),
+                            borderRadius: const BorderRadius.only(
+                                topRight: Radius.circular(15),
+                                bottomRight: Radius.circular(15)),
                             backgroundColor:
                                 const Color.fromARGB(255, 213, 159, 156),
                             icon: Icons.delete,
-                            onPressed: (context) async => {
+                            onPressed: (context) async {
                               await showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(20)),
-                                    backgroundColor:
-                                        const Color.fromARGB(255, 31, 30, 30),
+                                  return CupertinoAlertDialog(
                                     title: const Text(
                                       'Delete album',
                                       style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w600,
+                                        color: Colors.black,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'TsukimiRounded',
                                       ),
                                     ),
                                     content: const Text(
                                       'Are you sure you want to delete this album?',
                                       style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16,
+                                        color: Colors.black,
+                                        fontSize: 13,
                                         fontWeight: FontWeight.w500,
+                                        fontFamily: 'TsukimiRounded',
                                       ),
                                     ),
-                                    actionsAlignment:
-                                        MainAxisAlignment.spaceBetween,
                                     actions: <Widget>[
                                       TextButton(
-                                        child: const Text('Cancel',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.w600,
-                                            )),
-                                        onPressed: () async =>
-                                            Navigator.pop(context),
-                                      ),
+                                          child: const Text('Cancel',
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 13,
+                                                fontWeight: FontWeight.bold,
+                                              )),
+                                          onPressed: () {
+                                            Slidable.of(context)?.close();
+                                            Navigator.pop(context);
+                                          }),
                                       TextButton(
                                         child: const Text('Confirm',
                                             style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.w600,
+                                              color: Colors.black,
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.bold,
                                             )),
                                         onPressed: () async {
                                           _onDismissed(index);
@@ -334,7 +334,7 @@ class _ClosetPageState extends State<ClosetPage> {
                                     ],
                                   );
                                 },
-                              ),
+                              );
                             },
                           ),
                         ],

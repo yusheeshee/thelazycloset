@@ -79,6 +79,7 @@ class ChoosePage extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 20,
                     color: Colors.white,
+                    fontWeight: FontWeight.w400,
                   ),
                 ),
               ],
@@ -94,7 +95,7 @@ class ChoosePage extends StatelessWidget {
                   width: 300,
                   height: 70,
                   child: RawMaterialButton(
-                    fillColor: Colors.white,
+                    fillColor: Colors.grey[300],
                     onPressed: () {
                       Navigator.push(
                         context,
@@ -128,7 +129,7 @@ class ChoosePage extends StatelessWidget {
                   width: 300,
                   height: 70,
                   child: RawMaterialButton(
-                    fillColor: Colors.white,
+                    fillColor: Colors.grey[300],
                     onPressed: () {
                       Navigator.push(
                         context,
