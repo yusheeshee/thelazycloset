@@ -3,30 +3,31 @@ import 'my_textfield.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
-class LoginPage extends StatefulWidget {
+class RegisterPage extends StatefulWidget {
   final Function()? onTap;
-  const LoginPage({super.key, required this.onTap});
+  const RegisterPage({super.key, required this.onTap});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
 
-  void signIn() async {
-    try {
+  void signUp() async {
+    if (passwordController.text == confirmPasswordController.text) {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: emailController.text,
+        password: passwordController.text,
+      );
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: emailController.text,
         password: passwordController.text,
       );
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        errorText("Incorrect email");
-      } else if (e.code == 'wrong-password') {
-        errorText("Incorrect password");
-      }
+    } else {
+      errorText("Passwords do not match");
     }
   }
 
@@ -93,7 +94,7 @@ class _LoginPageState extends State<LoginPage> {
                   height: 50,
                 ),
                 Text(
-                  'Welcome back!',
+                  'Join Us!',
                   style: TextStyle(
                     fontSize: 18,
                     color: Colors.grey[300],
@@ -119,22 +120,11 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(
                   height: 10,
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(
-                        'Forgot Password?',
-                        style: TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.grey[200],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                MyTextField(
+                    controller: confirmPasswordController,
+                    hintText: 'Confirm Password',
+                    obscureText: true),
+                const SizedBox(height: 10),
                 const SizedBox(
                   height: 20,
                 ),
@@ -145,17 +135,17 @@ class _LoginPageState extends State<LoginPage> {
                       child: RawMaterialButton(
                         fillColor: Colors.grey[300],
                         onPressed: () {
-                          signIn();
+                          signUp();
                         },
                         padding: const EdgeInsets.symmetric(
-                          horizontal: 158,
+                          horizontal: 154,
                           vertical: 15,
                         ),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15.0)),
                         child: const Center(
                           child: Text(
-                            "Sign In",
+                            "Sign Up",
                             style: TextStyle(
                               color: Color.fromARGB(255, 24, 24, 24),
                               fontWeight: FontWeight.bold,
@@ -167,12 +157,12 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 235),
+                const SizedBox(height: 180),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Don\'t have an account?',
+                      'Already have an account?',
                       style: TextStyle(
                         fontWeight: FontWeight.w400,
                         color: Colors.grey[300],
@@ -184,7 +174,7 @@ class _LoginPageState extends State<LoginPage> {
                     GestureDetector(
                       onTap: widget.onTap,
                       child: const Text(
-                        'Sign Up',
+                        'Log In',
                         style: TextStyle(
                           color: Color.fromARGB(255, 240, 190, 207),
                           fontWeight: FontWeight.bold,
