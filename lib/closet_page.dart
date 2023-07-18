@@ -6,7 +6,6 @@ import 'dart:convert';
 import 'albumdb.dart';
 import 'dart:typed_data';
 import 'dart:io';
-import 'package:flutter/cupertino.dart';
 
 class ClosetPage extends StatefulWidget {
   const ClosetPage({super.key});
@@ -148,24 +147,23 @@ class _ClosetPageState extends State<ClosetPage> {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(15)),
                               backgroundColor:
-                                  Colors.grey[300],
+                                  const Color.fromARGB(255, 31, 30, 30),
                               title: const Text(
                                 'Create Album',
                                 style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w400,
                                 ),
                               ),
-                              contentPadding: EdgeInsets.symmetric(horizontal: 22, vertical: 0),
                               content: TextField(
-                                style: const TextStyle(color: Colors.black),
+                                style: const TextStyle(color: Colors.white),
                                 controller: _newAlbumController,
                                 decoration: const InputDecoration(
                                     hintText: 'Album Name',
                                     hintStyle: TextStyle(
-                                      color: Color.fromARGB(255, 64, 63, 63),
-                                      fontSize: 13,
+                                      color: Color.fromARGB(255, 172, 171, 171),
+                                      fontSize: 15,
                                       fontWeight: FontWeight.bold,
                                     )),
                               ),
@@ -173,16 +171,14 @@ class _ClosetPageState extends State<ClosetPage> {
                                 TextButton(
                                   child: const Text('Cancel',
                                       style: TextStyle(
-                                        color: Colors.blue,
-                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
                                       )),
                                   onPressed: () async => Navigator.pop(context),
                                 ),
                                 TextButton(
                                   child: const Text('Create',
                                       style: TextStyle(
-                                        color: Colors.blue,
-                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
                                       )),
                                   onPressed: () async {
                                     _createAlbum();
@@ -227,28 +223,25 @@ class _ClosetPageState extends State<ClosetPage> {
                                         borderRadius:
                                             BorderRadius.circular(15)),
                                     backgroundColor:
-                                        Colors.grey[300],
+                                        const Color.fromARGB(255, 31, 30, 30),
                                     title: const Text(
                                       'Rename Album',
                                       style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w400,
                                       ),
                                     ),
-                                    contentPadding: const EdgeInsets.symmetric(horizontal: 22, vertical: 0),
                                     content: TextField(
-                                      style: const TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                                      style:
+                                          const TextStyle(color: Colors.white),
                                       controller: _renameAlbumController,
                                       decoration: const InputDecoration(
                                           hintText: 'New album name',
                                           hintStyle: TextStyle(
-                                            color: Color.fromARGB(255, 64, 63, 63),
-                                            fontSize: 13,
+                                            color: Color.fromARGB(
+                                                255, 172, 171, 171),
+                                            fontSize: 15,
                                             fontWeight: FontWeight.bold,
                                           )),
                                     ),
@@ -256,8 +249,7 @@ class _ClosetPageState extends State<ClosetPage> {
                                       TextButton(
                                         child: const Text('Cancel',
                                             style: TextStyle(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white,
                                             )),
                                         onPressed: () async =>
                                             Navigator.pop(context),
@@ -265,8 +257,7 @@ class _ClosetPageState extends State<ClosetPage> {
                                       TextButton(
                                         child: const Text('Rename',
                                             style: TextStyle(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white,
                                             )),
                                         onPressed: () async {
                                           _renameAlbum(album);
@@ -294,38 +285,45 @@ class _ClosetPageState extends State<ClosetPage> {
                               await showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
-                                  return CupertinoAlertDialog(
+                                  return AlertDialog(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
+                                    backgroundColor:
+                                        const Color.fromARGB(255, 31, 30, 30),
                                     title: const Text(
                                       'Delete album',
                                       style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w600,
                                       ),
                                     ),
                                     content: const Text(
                                       'Are you sure you want to delete this album?',
                                       style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 13,
+                                        color: Colors.white,
+                                        fontSize: 16,
                                         fontWeight: FontWeight.w500,
                                       ),
                                     ),
+                                    actionsAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     actions: <Widget>[
                                       TextButton(
                                         child: const Text('Cancel',
                                             style: TextStyle(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w600,
                                             )),
                                         onPressed: () async =>
                                             Navigator.pop(context),
                                       ),
                                       TextButton(
-                                        child: const Text('Delete Album',
+                                        child: const Text('Confirm',
                                             style: TextStyle(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w600,
                                             )),
                                         onPressed: () async {
                                           _onDismissed(index);
