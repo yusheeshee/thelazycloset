@@ -1,39 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'albumdb.dart';
-import 'album.dart';
 import 'image_page.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'removeapi.dart';
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class PhotoAlbumScreen extends StatefulWidget {
-  final int id;
+  final String name;
+  final String id;
 
-  const PhotoAlbumScreen({super.key, required this.id});
+  const PhotoAlbumScreen({super.key, required this.name, required this.id});
 
   @override
   State<PhotoAlbumScreen> createState() => _PhotoAlbumScreenState();
 }
 
 class _PhotoAlbumScreenState extends State<PhotoAlbumScreen> {
-  Album album = Album(name: '', images: []);
-  bool isLoading = false;
+  final albums = FirebaseFirestore.instance
+      .collection('Users')
+      .doc(FirebaseAuth.instance.currentUser!.email)
+      .collection('Closet Albums');
 
   @override
   void initState() {
-    refreshAlbum();
     super.initState();
   }
 
-  Future refreshAlbum() async {
-    setState(() => isLoading = true);
-    album = await AlbumDB.instance.readAlbum(widget.id);
-    setState(() => isLoading = false);
-  }
-
   Future _pickImage(ImageSource source) async {
+    final album = albums.doc(widget.id);
+    DocumentSnapshot docSnapshot = await album.get();
+    Map<String, dynamic> data = docSnapshot.data() as Map<String, dynamic>;
+    final images = List<String>.from(data['Images']);
     final imagePicker = ImagePicker();
     final pickedImage = await imagePicker.pickImage(source: source);
     if (pickedImage != null) {
@@ -54,25 +54,25 @@ class _PhotoAlbumScreenState extends State<PhotoAlbumScreen> {
       if (croppedImage != null) {
         final removeApi = RemoveAPI();
         final removedBgImage = await removeApi.removeBgApi(croppedImage.path);
-
-        setState(() {
-          album.images.add(base64Encode(removedBgImage));
-        });
-        await AlbumDB.instance.update(album);
+        images.add(base64Encode(removedBgImage));
+        album.update({'Images': images});
       }
     }
     return;
   }
 
   Future deleteImage(int index) async {
-    setState(() {
-      album.images.removeAt(index);
-    });
-    await AlbumDB.instance.update(album);
+    final album = albums.doc(widget.id);
+    DocumentSnapshot docSnapshot = await album.get();
+    Map<String, dynamic> data = docSnapshot.data() as Map<String, dynamic>;
+    final images = List<String>.from(data['Images']);
+    images.removeAt(index);
+    album.update({'Images': images});
   }
 
   @override
   Widget build(BuildContext context) {
+    final album = albums.doc(widget.id);
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -87,108 +87,115 @@ class _PhotoAlbumScreenState extends State<PhotoAlbumScreen> {
             color: Colors.white,
           ),
         ),
-        title: const ImageIcon(
-          AssetImage('images/hanger.png'),
-          size: 30,
-          color: Colors.white,
-        ),
+        title: Text(widget.name,
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
         centerTitle: true,
       ),
       body: SafeArea(
         child: Column(
           children: [
             Expanded(
-              child: Container(
-                  padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-                  child: GridView.builder(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 10,
-                    ),
-                    itemCount: album.images.length,
-                    itemBuilder: (context, index) {
-                      return RawMaterialButton(
-                        onPressed: () async {
-                          await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ImagePage(
-                                imagePath: album.images[index],
-                                index: index,
-                              ),
-                            ),
-                          );
-                        },
-                        onLongPress: () async {
-                          await showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return CupertinoAlertDialog(
-                                title: const Text(
-                                  'Delete image',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'TsukimiRounded',
+                child: Container(
+              padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+              child: StreamBuilder(
+                  stream: album.snapshots(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      final images =
+                          List<String>.from(snapshot.data!['Images']);
+                      return GridView.builder(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 10,
+                          mainAxisSpacing: 10,
+                        ),
+                        itemCount: images.length,
+                        itemBuilder: (context, index) {
+                          return RawMaterialButton(
+                            onPressed: () async {
+                              await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ImagePage(
+                                    imagePath: images[index],
+                                    index: index,
                                   ),
                                 ),
-                                content: const Text(
-                                  'Are you sure you want to delete this image?',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w500,
-                                    fontFamily: 'TsukimiRounded',
-                                  ),
-                                ),
-                                actions: <Widget>[
-                                  TextButton(
-                                      child: const Text('Cancel',
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.bold,
-                                          )),
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      }),
-                                  TextButton(
-                                    child: const Text('Confirm',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.bold,
-                                        )),
-                                    onPressed: () async {
-                                      deleteImage(index);
-                                      Navigator.pop(context);
-                                      refreshAlbum();
-                                    },
-                                  ),
-                                ],
                               );
                             },
-                          );
-                        },
-                        child: Container(
-                            decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          image: DecorationImage(
-                            image:
-                                Image.memory(base64Decode(album.images[index]))
+                            onLongPress: () async {
+                              await showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return CupertinoAlertDialog(
+                                    title: const Text(
+                                      'Delete image',
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'TsukimiRounded',
+                                      ),
+                                    ),
+                                    content: const Text(
+                                      'Are you sure you want to delete this image?',
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w500,
+                                        fontFamily: 'TsukimiRounded',
+                                      ),
+                                    ),
+                                    actions: <Widget>[
+                                      TextButton(
+                                          child: const Text('Cancel',
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 13,
+                                                fontWeight: FontWeight.bold,
+                                              )),
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          }),
+                                      TextButton(
+                                        child: const Text('Confirm',
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.bold,
+                                            )),
+                                        onPressed: () async {
+                                          deleteImage(index);
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            },
+                            child: Container(
+                                decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              image: DecorationImage(
+                                image: Image.memory(base64Decode(images[index]))
                                     .image,
 
-                            /// Image.file(File(album.images[index])).image,
-                            fit: BoxFit.cover,
-                          ),
-                        )),
+                                /// Image.file(File(album.images[index])).image,
+                                fit: BoxFit.cover,
+                              ),
+                            )),
+                          );
+                        },
                       );
-                    },
-                  )),
-            ),
+                    } else {
+                      return Center(
+                        child: Text('Error: ${snapshot.error}'),
+                      );
+                    }
+                  }),
+            )),
             RawMaterialButton(
               onPressed: () async {
                 showModalBottomSheet(

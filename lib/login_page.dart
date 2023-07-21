@@ -22,11 +22,7 @@ class _LoginPageState extends State<LoginPage> {
         password: passwordController.text,
       );
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        errorText("Incorrect email");
-      } else if (e.code == 'wrong-password') {
-        errorText("Incorrect password");
-      }
+      errorText(e.code);
     }
   }
 
@@ -73,6 +69,7 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
+                SizedBox(height: 30),
                 ImageIcon(
                   const AssetImage('images/hanger.png'),
                   size: 50,
@@ -90,7 +87,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 const SizedBox(
-                  height: 50,
+                  height: 60,
                 ),
                 Text(
                   'Welcome back!',
@@ -109,35 +106,14 @@ class _LoginPageState extends State<LoginPage> {
                   hintText: "Email",
                 ),
                 const SizedBox(
-                  height: 10,
+                  height: 8,
                 ),
                 MyTextField(
                   controller: passwordController,
                   hintText: "Password",
                   obscureText: true,
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(
-                        'Forgot Password?',
-                        style: TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.grey[200],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -167,7 +143,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 235),
+                const SizedBox(height: 230),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

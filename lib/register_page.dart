@@ -86,6 +86,7 @@ class _RegisterPageState extends State<RegisterPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
+                SizedBox(height: 30),
                 ImageIcon(
                   const AssetImage('images/hanger.png'),
                   size: 50,
@@ -103,7 +104,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
                 const SizedBox(
-                  height: 50,
+                  height: 60,
                 ),
                 Text(
                   'Join Us!',
@@ -122,7 +123,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   hintText: "Email",
                 ),
                 const SizedBox(
-                  height: 10,
+                  height: 8,
                 ),
                 MyTextField(
                   controller: passwordController,
@@ -130,16 +131,13 @@ class _RegisterPageState extends State<RegisterPage> {
                   obscureText: true,
                 ),
                 const SizedBox(
-                  height: 10,
+                  height: 8,
                 ),
                 MyTextField(
                     controller: confirmPasswordController,
                     hintText: 'Confirm Password',
                     obscureText: true),
-                const SizedBox(height: 10),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -169,7 +167,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 180),
+                const SizedBox(height: 158),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
