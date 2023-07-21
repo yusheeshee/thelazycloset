@@ -44,42 +44,31 @@ class ChoosePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.black,
+        title: const ImageIcon(
+          AssetImage('images/hanger.png'),
+          size: 30,
+          color: Colors.white,
+        ),
+        centerTitle: true,
+      ),
       body: SafeArea(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             const SizedBox(
-              height: 70,
+              height: 180,
             ),
-            const ImageIcon(
-              AssetImage('images/hanger.png'),
-              size: 60,
-              color: Colors.white,
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            const Text(
-              'TheLazyCloset',
-              style: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.w600,
-                color: Colors.white,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(
-              height: 90,
-            ),
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Find Inspiration',
+                  'Get inspired!',
                   style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w400,
+                    fontSize: 22,
+                    color: Colors.grey[300],
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ],
@@ -92,7 +81,7 @@ class ChoosePage extends StatelessWidget {
               children: <Widget>[
                 // ignore: sized_box_for_whitespace
                 Container(
-                  width: 300,
+                  width: 360,
                   height: 70,
                   child: RawMaterialButton(
                     fillColor: Colors.grey[300],
@@ -126,7 +115,7 @@ class ChoosePage extends StatelessWidget {
               children: <Widget>[
                 // ignore: sized_box_for_whitespace
                 Container(
-                  width: 300,
+                  width: 360,
                   height: 70,
                   child: RawMaterialButton(
                     fillColor: Colors.grey[300],

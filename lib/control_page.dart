@@ -5,8 +5,6 @@ import 'thoughts_page.dart';
 import 'choose_page.dart';
 import 'tryon_page.dart';
 
-import 'main.dart';
-
 class ControlPage extends StatefulWidget {
   const ControlPage({super.key});
 

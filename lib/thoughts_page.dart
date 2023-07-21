@@ -5,8 +5,18 @@ class ThoughtsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       backgroundColor: Colors.black,
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.black,
+        title: const ImageIcon(
+          AssetImage('images/hanger.png'),
+          size: 30,
+          color: Colors.white,
+        ),
+        centerTitle: true,
+      ),
     );
   }
 }

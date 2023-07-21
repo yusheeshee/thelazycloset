@@ -18,7 +18,7 @@ class EnlargePage extends StatelessWidget {
           },
           child: const ImageIcon(
             AssetImage('images/backarrow.png'),
-            size: 20,
+            size: 18,
             color: Colors.white,
           ),
         ),

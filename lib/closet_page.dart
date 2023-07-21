@@ -79,7 +79,7 @@ class _ClosetPageState extends State<ClosetPage> {
         child: Column(
           children: [
             SizedBox(
-              width: 360,
+              width: 390,
               child: ListTile(
                   tileColor: Colors.black,
                   shape: RoundedRectangleBorder(
@@ -116,19 +116,22 @@ class _ClosetPageState extends State<ClosetPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.black,
+        title: const ImageIcon(
+          AssetImage('images/hanger.png'),
+          size: 30,
+          color: Colors.white,
+        ),
+        centerTitle: true,
+      ),
       body: SafeArea(
         child: Column(
           children: <Widget>[
             const SizedBox(
-              height: 30,
+              height: 20,
             ),
-            const Text("TheLazyCloset",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 30,
-                  fontWeight: FontWeight.w600,
-                )),
-            const SizedBox(height: 25),
             Row(
               children: [
                 const SizedBox(width: 25),

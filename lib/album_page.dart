@@ -6,6 +6,7 @@ import 'image_page.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'removeapi.dart';
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 
 class PhotoAlbumScreen extends StatefulWidget {
   final int id;
@@ -124,44 +125,42 @@ class _PhotoAlbumScreenState extends State<PhotoAlbumScreen> {
                           await showDialog(
                             context: context,
                             builder: (BuildContext context) {
-                              return AlertDialog(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20)),
-                                backgroundColor:
-                                    const Color.fromARGB(255, 31, 30, 30),
+                              return CupertinoAlertDialog(
                                 title: const Text(
                                   'Delete image',
                                   style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'TsukimiRounded',
                                   ),
                                 ),
                                 content: const Text(
                                   'Are you sure you want to delete this image?',
                                   style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
+                                    color: Colors.black,
+                                    fontSize: 13,
                                     fontWeight: FontWeight.w500,
+                                    fontFamily: 'TsukimiRounded',
                                   ),
                                 ),
-                                actionsAlignment:
-                                    MainAxisAlignment.spaceBetween,
                                 actions: <Widget>[
                                   TextButton(
-                                    child: const Text('Cancel',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w600,
-                                        )),
-                                    onPressed: () async =>
-                                        Navigator.pop(context),
-                                  ),
+                                      child: const Text('Cancel',
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.bold,
+                                          )),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      }),
                                   TextButton(
                                     child: const Text('Confirm',
                                         style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w600,
+                                          color: Colors.black,
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.bold,
                                         )),
                                     onPressed: () async {
                                       deleteImage(index);
@@ -218,8 +217,9 @@ class _PhotoAlbumScreenState extends State<PhotoAlbumScreen> {
                             Icons.image,
                             color: Colors.black,
                           ),
-                          onTap: () {
+                          onTap: () async {
                             _pickImage(ImageSource.gallery);
+                            Navigator.pop(context);
                           },
                         ),
                         ListTile(
@@ -236,8 +236,9 @@ class _PhotoAlbumScreenState extends State<PhotoAlbumScreen> {
                             ),
                             leading:
                                 const Icon(Icons.camera, color: Colors.black),
-                            onTap: () {
+                            onTap: () async {
                               _pickImage(ImageSource.camera);
+                              Navigator.pop(context);
                             }),
                       ]),
                     );

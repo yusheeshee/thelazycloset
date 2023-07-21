@@ -144,7 +144,7 @@ class _LoginPageState extends State<LoginPage> {
                     ButtonTheme(
                       child: RawMaterialButton(
                         fillColor: Colors.grey[300],
-                        onPressed: () {
+                        onPressed: () async {
                           signIn();
                         },
                         padding: const EdgeInsets.symmetric(

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'my_textfield.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class RegisterPage extends StatefulWidget {
   final Function()? onTap;
@@ -17,17 +19,27 @@ class _RegisterPageState extends State<RegisterPage> {
   final confirmPasswordController = TextEditingController();
 
   void signUp() async {
-    if (passwordController.text == confirmPasswordController.text) {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+    if (passwordController.text != confirmPasswordController.text) {
+      errorText("Passwords do not match");
+      return;
+    }
+    try {
+      UserCredential userCredential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: emailController.text,
         password: passwordController.text,
       );
+
+      FirebaseFirestore.instance
+          .collection("Users")
+          .doc(userCredential.user!.email)
+          .set({'username': emailController.text.split('@')[0]});
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: emailController.text,
         password: passwordController.text,
       );
-    } else {
-      errorText("Passwords do not match");
+    } on FirebaseAuthException catch (e) {
+      errorText(e.code);
     }
   }
 
@@ -134,7 +146,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ButtonTheme(
                       child: RawMaterialButton(
                         fillColor: Colors.grey[300],
-                        onPressed: () {
+                        onPressed: () async {
                           signUp();
                         },
                         padding: const EdgeInsets.symmetric(
