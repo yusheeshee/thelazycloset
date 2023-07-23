@@ -58,7 +58,7 @@ class ChoosePage extends StatelessWidget {
         child: Column(
           children: <Widget>[
             const SizedBox(
-              height: 180,
+              height: 160,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -66,7 +66,7 @@ class ChoosePage extends StatelessWidget {
                 Text(
                   'Get inspired!',
                   style: TextStyle(
-                    fontSize: 22,
+                    fontSize: 20,
                     color: Colors.grey[300],
                     fontWeight: FontWeight.w600,
                   ),
@@ -81,7 +81,7 @@ class ChoosePage extends StatelessWidget {
               children: <Widget>[
                 // ignore: sized_box_for_whitespace
                 Container(
-                  width: 360,
+                  width: 392,
                   height: 70,
                   child: RawMaterialButton(
                     fillColor: Colors.grey[300],
@@ -115,7 +115,7 @@ class ChoosePage extends StatelessWidget {
               children: <Widget>[
                 // ignore: sized_box_for_whitespace
                 Container(
-                  width: 360,
+                  width: 392,
                   height: 70,
                   child: RawMaterialButton(
                     fillColor: Colors.grey[300],

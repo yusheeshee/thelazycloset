@@ -3,7 +3,6 @@ import 'my_textfield.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 class RegisterPage extends StatefulWidget {
   final Function()? onTap;
@@ -17,11 +16,14 @@ class _RegisterPageState extends State<RegisterPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
+  final usernameController = TextEditingController();
 
   void signUp() async {
     if (passwordController.text != confirmPasswordController.text) {
       errorText("Passwords do not match");
       return;
+    } else if (usernameController.text.isEmpty) {
+      errorText('Please set a username');
     }
     try {
       UserCredential userCredential =
@@ -33,7 +35,11 @@ class _RegisterPageState extends State<RegisterPage> {
       FirebaseFirestore.instance
           .collection("Users")
           .doc(userCredential.user!.email)
-          .set({'username': emailController.text.split('@')[0]});
+          .set({'username': usernameController.text, 'profilepic': ''});
+      FirebaseFirestore.instance
+          .collection("Users")
+          .doc(userCredential.user!.email)
+          .collection('Favourites');
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: emailController.text,
         password: passwordController.text,
@@ -86,7 +92,6 @@ class _RegisterPageState extends State<RegisterPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SizedBox(height: 30),
                 ImageIcon(
                   const AssetImage('images/hanger.png'),
                   size: 50,
@@ -104,7 +109,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
                 const SizedBox(
-                  height: 60,
+                  height: 50,
                 ),
                 Text(
                   'Join Us!',
@@ -125,6 +130,11 @@ class _RegisterPageState extends State<RegisterPage> {
                 const SizedBox(
                   height: 8,
                 ),
+                MyTextField(
+                    controller: usernameController,
+                    obscureText: false,
+                    hintText: 'Username'),
+                const SizedBox(height: 8),
                 MyTextField(
                   controller: passwordController,
                   hintText: "Password",
@@ -167,7 +177,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 158),
+                const SizedBox(height: 133),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

@@ -1,21 +1,23 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'closetalbum_page.dart';
+import 'fav_page.dart';
+import 'outfitalbum_page.dart';
 
-class ClosetPage extends StatefulWidget {
-  const ClosetPage({super.key});
+class OutfitPage extends StatefulWidget {
+  const OutfitPage({super.key});
 
   @override
-  State<ClosetPage> createState() {
-    return _ClosetPageState();
+  State<OutfitPage> createState() {
+    return _OutfitPageState();
   }
 }
 
-class _ClosetPageState extends State<ClosetPage> {
+class _OutfitPageState extends State<OutfitPage> {
   final user = FirebaseFirestore.instance
       .collection('Users')
       .doc(FirebaseAuth.instance.currentUser!.email);
@@ -26,6 +28,41 @@ class _ClosetPageState extends State<ClosetPage> {
     super.initState();
   }
 
+  Future _createAlbum(String name) async {
+    await user
+        .collection("Outfit Albums")
+        .add({'AlbumName': name, 'CreateTime': Timestamp.now()});
+  }
+
+  Future<bool> albumExists(String name) async {
+    QuerySnapshot querySnapshot = await user
+        .collection("Outfit Albums")
+        .where('AlbumName', isEqualTo: name)
+        .get();
+    return querySnapshot.docs.isNotEmpty;
+  }
+
+  Future _renameAlbum(String id, String newName) async {
+    await user
+        .collection("Outfit Albums")
+        .doc(id)
+        .update({'AlbumName': newName});
+  }
+
+  Future _onDismissed(String id) async {
+    final data = await user
+        .collection('Outfit Albums')
+        .doc(id)
+        .collection('Images')
+        .get();
+    for (var imageSnapshot in data.docs) {
+      final imageId = imageSnapshot.id;
+      user.collection('Favourites').doc(imageId).delete();
+    }
+
+    await user.collection("Outfit Albums").doc(id).delete();
+  }
+
   Future<String> getUsername() async {
     final userobj = await user.get();
     return userobj.data()!['username'];
@@ -34,7 +71,7 @@ class _ClosetPageState extends State<ClosetPage> {
   Future<Widget> displayTitle() async {
     final userobj = await user.get();
     final String username = userobj.data()!['username'];
-    return Text(username + ("'s Closet"),
+    return Text(username + ("'s Outfits"),
         style: const TextStyle(
           color: Colors.white,
           fontSize: 23,
@@ -42,75 +79,150 @@ class _ClosetPageState extends State<ClosetPage> {
         ));
   }
 
-  Future _createAlbum(String name) async {
-    await user.collection("Closet Albums").add({
-      'AlbumName': name,
-      'Images': <String>[],
-      'CreateTime': Timestamp.now()
-    });
-  }
-
-  Future<bool> albumExists(String name) async {
-    QuerySnapshot querySnapshot = await user
-        .collection("Closet Albums")
-        .where('AlbumName', isEqualTo: name)
-        .get();
-    return querySnapshot.docs.isNotEmpty;
-  }
-
-  Future _renameAlbum(String id, String newName) async {
-    await user
-        .collection("Closet Albums")
-        .doc(id)
-        .update({'AlbumName': newName});
-  }
-
-  Future _onDismissed(String id) async {
-    await user.collection("Closet Albums").doc(id).delete();
-  }
-
-  Widget buildListTile(QueryDocumentSnapshot album) {
+  Future<Widget> buildListTile(DocumentSnapshot album) async {
     final name = album['AlbumName'];
-    final images = List<String>.from(album['Images']);
-    return Center(
-      child: Column(
-        children: [
-          SizedBox(
-            width: 390,
-            child: ListTile(
-                tileColor: Colors.grey[300],
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                contentPadding: const EdgeInsets.all(15),
-                title: Text(name,
-                    style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600)),
-                leading: SizedBox(
-                  height: 50,
-                  width: 50,
-                  child: images.isEmpty
-                      ? const Icon(
-                          color: Color.fromARGB(255, 170, 169, 169),
-                          Icons.image,
-                          size: 40,
-                        )
-                      : Image.memory(base64Decode(images.first),
-                          fit: BoxFit.cover),
-                ),
+    final QuerySnapshot querySnapshot = await user
+        .collection('Outfit Albums')
+        .doc(album.id)
+        .collection('Images')
+        .limit(1)
+        .get();
+    if (querySnapshot.size == 0) {
+      return Center(
+        child: Column(
+          children: [
+            SizedBox(
+              width: 390,
+              child: ListTile(
+                  tileColor: Colors.grey[300],
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  contentPadding: const EdgeInsets.all(15),
+                  title: Text(name,
+                      style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600)),
+                  leading: const SizedBox(
+                      height: 50,
+                      width: 50,
+                      child: Icon(
+                        color: Color.fromARGB(255, 170, 169, 169),
+                        Icons.image,
+                        size: 40,
+                      )),
+                  onTap: () async {
+                    await Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) =>
+                            PhotoAlbumScreen(name: name, id: album.id)));
+                  }),
+            ),
+          ],
+        ),
+      );
+    } else {
+      Map<String, dynamic> data =
+          querySnapshot.docs.first.data() as Map<String, dynamic>;
+      final String path = data['path'];
+      return Center(
+        child: Column(
+          children: [
+            SizedBox(
+              width: 390,
+              child: ListTile(
+                  tileColor: Colors.grey[300],
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  contentPadding: const EdgeInsets.all(15),
+                  title: Text(name,
+                      style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600)),
+                  leading: SizedBox(
+                      height: 50,
+                      width: 50,
+                      child: Image.file(File(path), fit: BoxFit.cover)),
+                  onTap: () async {
+                    await Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) =>
+                            PhotoAlbumScreen(name: name, id: album.id)));
+                  }),
+            ),
+          ],
+        ),
+      );
+    }
+  }
 
-                /// Image.file(File(album.images.first)),
-                onTap: () async {
-                  await Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => PhotoAlbumScreen(
-                          name: album['AlbumName'], id: album.id)));
-                }),
-          ),
-        ],
-      ),
-    );
+  Future<Widget> buildFavTile(QuerySnapshot album) async {
+    const name = 'Favourites';
+    if (album.size == 0) {
+      return Center(
+        child: Column(
+          children: [
+            SizedBox(
+              width: 390,
+              child: ListTile(
+                  tileColor: Colors.grey[300],
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  contentPadding: const EdgeInsets.all(15),
+                  title: const Text(name,
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600)),
+                  leading: const SizedBox(
+                      height: 50,
+                      width: 50,
+                      child: Icon(
+                        color: Color.fromARGB(255, 170, 169, 169),
+                        Icons.image,
+                        size: 40,
+                      )),
+                  onTap: () async {
+                    await Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const FavPage()));
+                  }),
+            ),
+          ],
+        ),
+      );
+    } else {
+      final String path = album.docs.first['path'];
+      return Center(
+        child: Column(
+          children: [
+            SizedBox(
+              width: 390,
+              child: ListTile(
+                  tileColor: Colors.grey[300],
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  contentPadding: const EdgeInsets.all(15),
+                  title: const Text(name,
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600)),
+                  leading: SizedBox(
+                      height: 50,
+                      width: 50,
+                      child: Image.file(File(path), fit: BoxFit.cover)),
+                  onTap: () async {
+                    await Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const FavPage()));
+                  }),
+            ),
+          ],
+        ),
+      );
+    }
   }
 
   @override
@@ -261,9 +373,29 @@ class _ClosetPageState extends State<ClosetPage> {
                   ]),
             ),
             const SizedBox(height: 20),
+            FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                future: user.collection('Favourites').get(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return FutureBuilder<Widget>(
+                        future: buildFavTile(snapshot
+                            .data!), // Pass the document snapshot to buildListTile
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            return snapshot.data!;
+                          } else {
+                            return Center(
+                                child: Text('Error: ${snapshot.error}'));
+                          }
+                        });
+                  } else {
+                    return Center(child: Text('Error: ${snapshot.error}'));
+                  }
+                }),
+            const SizedBox(height: 10),
             Expanded(
               child: StreamBuilder(
-                  stream: user.collection("Closet Albums").snapshots(),
+                  stream: user.collection("Outfit Albums").snapshots(),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       return ListView.separated(
@@ -272,6 +404,7 @@ class _ClosetPageState extends State<ClosetPage> {
                               const SizedBox(height: 10),
                           itemBuilder: (context, index) {
                             final album = snapshot.data!.docs[index];
+
                             return Slidable(
                               endActionPane: ActionPane(
                                 motion: const StretchMotion(),
@@ -469,7 +602,18 @@ class _ClosetPageState extends State<ClosetPage> {
                                   ),
                                 ],
                               ),
-                              child: buildListTile(album),
+                              child: FutureBuilder<Widget>(
+                                future: buildListTile(album),
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasData) {
+                                    return snapshot.data!;
+                                  } else {
+                                    return Center(
+                                        child:
+                                            Text('Error: ${snapshot.error}'));
+                                  }
+                                },
+                              ),
                             );
                           });
                     } else {

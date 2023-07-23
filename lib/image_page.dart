@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-import 'dart:convert';
-import 'dart:typed_data';
-import 'dart:io';
 
 class ImagePage extends StatelessWidget {
-  final String imagePath;
-  final int index;
+  final ImageProvider<Object> image;
 
-  const ImagePage({super.key, required this.imagePath, required this.index});
+  const ImagePage({super.key, required this.image});
 
   @override
   Widget build(BuildContext context) {
@@ -36,15 +32,12 @@ class ImagePage extends StatelessWidget {
         child: Column(
           children: <Widget>[
             Expanded(
-              child: Hero(
-                tag: 'logo$index',
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15.0),
-                    image: DecorationImage(
-                      image: Image.memory(base64Decode(imagePath)).image,
-                      fit: BoxFit.contain,
-                    ),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15.0),
+                  image: DecorationImage(
+                    image: image,
+                    fit: BoxFit.contain,
                   ),
                 ),
               ),

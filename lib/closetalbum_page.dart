@@ -112,16 +112,15 @@ class _PhotoAlbumScreenState extends State<PhotoAlbumScreen> {
                         ),
                         itemCount: images.length,
                         itemBuilder: (context, index) {
+                          final ImageProvider<Object> image =
+                              Image.memory(base64Decode(images[index])).image;
                           return RawMaterialButton(
                             onPressed: () async {
                               await Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => ImagePage(
-                                    imagePath: images[index],
-                                    index: index,
-                                  ),
-                                ),
+                                    builder: (context) =>
+                                        ImagePage(image: image)),
                               );
                             },
                             onLongPress: () async {
@@ -159,7 +158,7 @@ class _PhotoAlbumScreenState extends State<PhotoAlbumScreen> {
                                             Navigator.pop(context);
                                           }),
                                       TextButton(
-                                        child: const Text('Confirm',
+                                        child: const Text('Delete',
                                             style: TextStyle(
                                               color: Colors.black,
                                               fontSize: 13,
@@ -179,8 +178,7 @@ class _PhotoAlbumScreenState extends State<PhotoAlbumScreen> {
                                 decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
                               image: DecorationImage(
-                                image: Image.memory(base64Decode(images[index]))
-                                    .image,
+                                image: image,
 
                                 /// Image.file(File(album.images[index])).image,
                                 fit: BoxFit.cover,
@@ -258,7 +256,7 @@ class _PhotoAlbumScreenState extends State<PhotoAlbumScreen> {
                 size: 30,
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
           ],
         ),
       ),

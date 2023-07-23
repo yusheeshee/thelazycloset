@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:thelazycloset/settings_page.dart';
 import 'closet_page.dart';
-import 'thoughts_page.dart';
+import 'outfit_page.dart';
 import 'choose_page.dart';
-import 'tryon_page.dart';
 
 class ControlPage extends StatefulWidget {
   const ControlPage({super.key});
@@ -22,10 +22,10 @@ class _ControlPageState extends State<ControlPage> {
   }
 
   final List<Widget> _pages = [
-    const TryOnPage(),
+    const OutfitPage(),
     const ClosetPage(),
-    const ThoughtsPage(),
     const ChoosePage(),
+    const SettingsPage(),
   ];
 
   @override
@@ -44,13 +44,41 @@ class _ControlPageState extends State<ControlPage> {
           child: GNav(
             selectedIndex: _selectedIndex,
             onTabChange: _navigateBottomBar,
-            color: Colors.white,
-            activeColor: const Color.fromARGB(255, 104, 104, 104),
+            color: const Color.fromARGB(255, 104, 104, 104),
+            activeColor: Colors.white,
             tabs: const [
-              GButton(icon: Icons.home),
-              GButton(icon: Icons.collections),
-              GButton(icon: Icons.favorite),
-              GButton(icon: Icons.lightbulb),
+              GButton(
+                icon: Icons.home,
+                text: ' Outfits',
+                textStyle: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500),
+              ),
+              GButton(
+                icon: Icons.collections,
+                text: ' Closet',
+                textStyle: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500),
+              ),
+              GButton(
+                icon: Icons.lightbulb,
+                text: ' Inspo',
+                textStyle: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500),
+              ),
+              GButton(
+                icon: Icons.settings,
+                text: ' Settings',
+                textStyle: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500),
+              ),
             ],
           ),
         ),

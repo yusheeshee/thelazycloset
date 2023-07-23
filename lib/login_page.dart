@@ -69,7 +69,6 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SizedBox(height: 30),
                 ImageIcon(
                   const AssetImage('images/hanger.png'),
                   size: 50,
@@ -87,7 +86,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 const SizedBox(
-                  height: 60,
+                  height: 50,
                 ),
                 Text(
                   'Welcome back!',
@@ -143,7 +142,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 230),
+                const SizedBox(height: 275),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

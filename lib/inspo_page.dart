@@ -48,7 +48,6 @@ class InspoPage extends StatelessWidget {
                           MaterialPageRoute(
                             builder: (context) => EnlargePage(
                               imagePath: displayImages[index],
-                              index: index,
                             ),
                           ),
                         );
