@@ -24,30 +24,35 @@ flutter run # runs the application in debug mode
 Apollo 11 
 
 # Motivation
-Do you spend hours standing in front of the mirror, thinking whether your fit is a slay or nay? Have you ever bought clothes online that do not fit you? More often than not, we waste precious time, effort, and money deciding on clothes that do not fit or flatter our body type. Furthermore, unsuccessful online purchases increase our carbon footprint as it increases the number of clothes that need to be produced, shipped, and ultimately discarded.  
+Are you tired of spending countless hours rummaging through your closet, sifting through piles of clothes just to find the right top that matches your outfit? Do you struggle with coordinating stylish looks and end up feeling frustrated and indecisive? 
 
-Through a clothing fitting app, users are able to try on an entire outfit, from head to toe, without ever stepping foot in a dressing room. Our app allows users to see exactly how different pieces of clothing will fit and look on you. You can experiment with different colors, patterns, and styles, and even mix and match items to create your own unique looks. 
- 
+We understand the daily struggle of outfit selection, whether it's due to a cluttered closet or simply lacking inspiration. That's why we've created a solution to simplify your life and elevate your style game. Our virtual closet app is designed to revolutionize the way you interact with your wardrobe, making outfit selection a breeze. Say goodbye to chaos and hello to an effortless organization and fashion inspiration. With just a few taps, you can categorize your clothing items, scroll through your favourite outfits, and discover trendy looks. Embrace the convenience and creativity our app offers, and step into each day with confidence, knowing you'll look your best without the usual hassle. 
 
 # Aim
-We hope to make an app that helps users pick their outfits, and guide users in making better online shopping decisions when buying clothes. 
+TheLazyCloset is a fashion application that serves as a virtual closet, granting users access to their entire clothing collection with just a single click. With TheLazyCloset, users can browse through their virtual closet, plan and save outfits for various occasions conveniently. 
 
+Our application serves as a virtual closet, which offers a seamless and organised platform for users to upload and categorise their clothing items. With the added functionality of uploading full-body outfit pictures and saving favourites for quick reference, users can efficiently plan their looks for any occasion. To stay up-to-date with the latest fashion trends, users can explore a curated list of current outfits in vogue. This feature ensures that users are always in the know and can confidently make fashion-forward choices. TheLazyCloset is the ultimate fashion companion, combining convenience and trend awareness to effortlessly curate perfect outfits and a well-rounded wardrobe.
 
 # User Stories
-- As a user who has trouble deciding what to wear, I want to be able to receive recommendations for outfits based on my personal fashion style.  
-- As a user who has no time and energy to try out different sets of clothes, I want to be able to set how different pieces of clothing will match one another and how they will fit on my body type.
-- As a user who has trouble remembering her slay and nay fits, I would want to be able to store and view all my favourite outfits.
+- As a user, I want to upload images of my clothing items and categorise them so that I can easily organise and access my virtual closet.
+
+- As a forgetful user with a lot of clothes, I sometimes forget what I have. I want to store them all in an app where I can easily see everything that I own. 
+
+- As a user with a busy schedule, I struggle to find time to plan my outfits for the week. With TheLazyCloset, I can upload full-body outfit pictures and save my favourite combinations, making it effortless to decide what to wear each day without spending too much time.
+
+- As a fashionista, I want to be able to browse a list of outfits that are currently in trend, so that I can stay up-to-date with the latest fashion and find inspiration for my outfits.
+
 
 # Features
 TheLazyCloset is an app that helps users pick their outfits. Users get creative in the creative space where they can choose clothing items and build their outfit on their own bodies. 
 
-1. Users upload a full-body picture from which the app will auto-crop out their full body and use it as the outfit-building base. 
-2. Users can upload images of clothing and the app will auto-crop out the clothing. 
-3. Users have to create their own album & sub-album to categorise their clothing. (eg. tops, bottoms, dresses) 
-4. The cropped clothing will be stored in the user’s album(s) of choice.
-5. In the creative space, users choose clothing items from the albums to lay over the base. The items can be resized.
-6. Users can create outfit collections and save their outfits into their collection(s) of choice. (eg. work, casual, date)
-7. Users can favourite or blacklist outfits. 
+1. User account authentication
+2. Profile can be edited via settings page.
+3. On the virtual closet page, users can create albums for different types of clothing items and upload pictures which can be cropped according to the user’s desire. The outfits page has the same function. 
+4. Auto background removal function for images uploaded in the closet page.
+5. Users can also rename and delete albums and delete pictures within specific albums. 
+6. Users can favourite outfits in outfits albums and they will appear in the pre-made favourites album. 
+7. Outfits can be removed from favourites. 
 8. TheLazyCloset has an outfit recommendations page that users can browse through for inspiration. 
 
 # Timeline & Features to be Completed
@@ -60,11 +65,13 @@ TheLazyCloset is an app that helps users pick their outfits. Users get creative 
 - Album creation 
 
 24 July 2023 - Evaluation Milestone 3: 
-- Favourites & Blacklist page
-- Avatar drag and drop clothing items function
+- Favourites album
+- Firebase user authentication
+- Firebase database
+- Settings page
+- App aesthetics
 
 24 Aug 2023 - Splashdown:
-- Complete user authentication process for login page
 - Polish up the system
 - Implement additional features that are of least priority
 
